@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Malumfashi Academy Application</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+      color: #333;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .section {
+      border: 1px solid #e1e1e1;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background-color: #fdfdfd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Malumfashi Academy - Admission</h2>
+
+  <!-- SERIAL & PIN SECTION -->
+  <div id="authSection">
+    <div class="form-group">
+      <label for="serial">Registration Serial No:</label>
+      <input type="text" id="serial" required>
+    </div>
+    <div class="form-group">
+      <label for="pin">PIN:</label>
+      <input type="password" id="pin" required>
+    </div>
+    <button onclick="showForm()">Login</button>
+  </div>
+
+  <!-- FULL FORM (Initially Hidden) -->
+  <form id="mainForm" class="hidden">
+
+    <div class="section">
+      <h3>Personal Information</h3>
+      <div class="form-group"><label>First Name:</label><input type="text" required></div>
+      <div class="form-group"><label>Surname:</label><input type="text" required></div>
+      <div class="form-group"><label>Other Name:</label><input type="text"></div>
+      <div class="form-group"><label>Date of Birth:</label><input type="date" required></div>
+      <div class="form-group"><label>Gender:</label>
+        <select required>
+          <option value="">Select</option><option>Male</option><option>Female</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Address:</label><input type="text" required></div>
+      <div class="form-group"><label>Religion:</label><input type="text" required></div>
+      <div class="form-group"><label>Tribe:</label><input type="text" required></div>
+    </div>
+
+    <div class="section">
+      <h3>Educational Level</h3>
+      <div class="form-group">
+        <label>Current Level:</label>
+        <select id="currentLevel" required>
+          <option value="">Select</option>
+          <option value="Nursery">Nursery</option>
+          <option value="Primary">Primary</option>
+          <option value="Junior">Junior Secondary</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Applying To:</label>
+        <select required>
+          <option value="">Select</option>
+          <option>Nursery</option>
+          <option>Primary</option>
+          <option>Junior Secondary</option>
+          <option>Senior Secondary</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="eduSection" class="section hidden">
+      <h3>Previous Education</h3>
+
+      <div id="nurseryGroup" class="form-group hidden">
+        <label>Nursery School Attended:</label>
+        <input type="text">
+        <label>Start Date:</label><input type="date">
+        <label>End Date:</label><input type="date">
+        <label>Nursery Certificate (Optional):</label><input type="file">
+      </div>
+
+      <div id="primaryGroup" class="form-group hidden">
+        <label>Primary School Attended:</label>
+        <input type="text">
+        <label>Start Date:</label><input type="date">
+        <label>End Date:</label><input type="date">
+        <label>Primary Certificate:</label><input type="file">
+      </div>
+
+      <div id="juniorGroup" class="form-group hidden">
+        <label>Junior Testimonial:</label><input type="file">
+        <label>Statement of Result:</label><input type="file">
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Other Details</h3>
+      <div class="form-group">
+        <label>Indigen Certificate:</label>
+        <input type="file" required>
+      </div>
+      <div class="form-group">
+        <label>Passport Photograph:</label>
+        <input type="file" accept="image/*" required>
+      </div>
+      <div class="form-group">
+        <label>State of Origin:</label>
+        <select id="stateSelect" required></select>
+      </div>
+      <div class="form-group">
+        <label>LGA:</label>
+        <select id="lgaSelect" required></select>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Parent / Guardian Info</h3>
+      <div class="form-group"><label>Full Name:</label><input type="text" required></div>
+      <div class="form-group"><label>Phone Number:</label><input type="tel" required></div>
+    </div>
+
+    <button type="submit">Submit Application</button>
+  </form>
+</div>
+
+<script>
+// Show full form after Serial & PIN
+function showForm() {
+  const serial = document.getElementById("serial").value;
+  const pin = document.getElementById("pin").value;
+  if (serial && pin) {
+    document.getElementById("authSection").classList.add("hidden");
+    document.getElementById("mainForm").classList.remove("hidden");
+  } else {
+    alert("Please enter Serial Number and PIN.");
+  }
+}
+
+// Show relevant education fields
+document.getElementById("currentLevel").addEventListener("change", function() {
+  const val = this.value;
+  const eduSection = document.getElementById("eduSection");
+  const nursery = document.getElementById("nurseryGroup");
+  const primary = document.getElementById("primaryGroup");
+  const junior = document.getElementById("juniorGroup");
+
+  eduSection.classList.remove("hidden");
+  nursery.classList.add("hidden");
+  primary.classList.add("hidden");
+  junior.classList.add("hidden");
+
+  if (val === "Nursery") {
+    nursery.classList.remove("hidden");
+  } else if (val === "Primary") {
+    nursery.classList.remove("hidden"); // Optional
+    primary.classList.remove("hidden");
+  } else if (val === "Junior") {
+    nursery.classList.remove("hidden"); // Optional
+    primary.classList.remove("hidden");
+    junior.classList.remove("hidden");
+  }
+});
+
+// Populate Nigerian states and LGAs (demo)
+const statesAndLGAs = {
+  "Katsina": ["Malumfashi", "Funtua", "Daura"],
+  "Kano": ["Dala", "Tarauni", "Gwale"],
+  "Kaduna": ["Zaria", "Kachia", "Kaduna North"],
+  "Lagos": ["Ikeja", "Ikorodu", "Epe"],
+  "FCT": ["Abuja Municipal", "Bwari"]
+};
+
+const stateSelect = document.getElementById("stateSelect");
+const lgaSelect = document.getElementById("lgaSelect");
+
+for (let state in statesAndLGAs) {
+  const opt = document.createElement("option");
+  opt.value = state;
+  opt.innerText = state;
+  stateSelect.appendChild(opt);
+}
+
+stateSelect.addEventListener("change", function () {
+  lgaSelect.innerHTML = "";
+  statesAndLGAs[this.value].forEach(lga => {
+    const opt = document.createElement("option");
+    opt.value = lga;
+    opt.innerText = lga;
+    lgaSelect.appendChild(opt);
+  });
+});
+</script>
+
+</body>
+</html>
